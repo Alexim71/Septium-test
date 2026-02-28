@@ -62,14 +62,6 @@ body {
     padding: var(--spacing-xl);
 }
 
-/* Grille */
-.products {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-xl);
-    max-width: 1400px;
-    margin: 0 auto;
-}
 
 /* Carte */
 .product-card {
@@ -80,10 +72,10 @@ body {
     padding: 0px;
     isolation: isolate;  /* Pour gérer les z-index correctement */
     
-    /* Dimensions */
-    width: 508px;
-    min-width: 390px;     /* Largeur minimum */
-    height: 704.67px;     /* Hauteur exacte */
+   /* Dimensions responsives au lieu de fixes */
+    width: 100%;              /* Prend toute la largeur disponible */
+    min-width: auto;          /* Supprime la min-width fixe de 390px */
+    height: auto;             /* Hauteur automatique */
     
     /* Style de base */
     background-color: var(--color-background, #ffffff);
@@ -160,10 +152,11 @@ body {
 /* ===== POUR LE CONTENEUR PARENT (grille) ===== */
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(390px, 508px));
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 
@@ -579,10 +572,15 @@ body {
     align-items: flex-end;   /* Alignement en bas */
     gap: 20px;
 
-    width: 468px;
-    height: 74px;
+   /* Au lieu de width: 468px; */
+    width: 100%;              /* Prend toute la largeur */
+    max-width: 100%;          /* Ne dépasse pas le parent */
+    height: auto;             /* Hauteur automatique */
+    min-height: 74px;         /* Garde la hauteur minimum */
 
-    margin: var(--spacing-sm) var(--spacing-md);
+     margin: var(--spacing-sm) var(--spacing-md);
+    padding-right: var(--spacing-md); /* Ajoute du padding */
+    box-sizing: border-box;
 }
 
 
