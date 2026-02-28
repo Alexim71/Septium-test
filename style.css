@@ -52,23 +52,6 @@ button {
     
     --border-radius: 6px;
     --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-    /* Dimensions exactes de la maquette */
-    --frame-width: 1036px;
-    --frame-height: 2154px;
-    --frame-left: 202px;
-    --frame-top: 100px;
-    
-    /* Dimensions des cartes */
-    --card-width: 508px;
-    --card-height: 704.67px;
-    --card-gap: 20px;
-
-     /* Dimensions */
-    --container-width: 1036px;
-    --container-height: 2154px;
-    --card-gap: 20px;
-    --top-margin: 100px;
 }
 
 body {
@@ -94,7 +77,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* padding: 0px; */
+    padding: 0px;
     isolation: isolate;  /* Pour gérer les z-index correctement */
     
     /* Dimensions */
@@ -120,46 +103,23 @@ body {
     
     /* Pour gérer le contenu qui dépasse */
     overflow: hidden;
-
-     /* Pour que les cartes soient bien alignées */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 
 
-/* ===== POUR CENTRER LE CONTENEUR SI L'ÉCRAN EST TROP PETIT ===== */
+/* ===== RESPONSIVE - SI L'ÉCRAN EST PLUS PETIT ===== */
 @media (max-width: 1300px) {
     .product-list {
-        position: relative;
+        position: relative;  /* Devient relatif pour s'adapter */
         width: 100%;
         height: auto;
         left: 0;
         top: 0;
         padding: 20px;
         margin: 0 auto;
-        max-width: calc((var(--card-width) * 2) + var(--card-gap) + 40px);
+        max-width: 1100px;   /* Pour centrer le contenu */
     }
 }
-
-
-
-
-@media (max-width: 768px) {
-    .product-list {
-        grid-template-columns: 1fr;
-        justify-items: center;
-    }
-    
-    .product-card {
-        width: 100%;
-        max-width: var(--card-width);
-        height: auto;
-        min-height: 600px;
-    }
-}
-
 
 /* ===== VERSION RESPONSIVE ===== */
 @media (max-width: 1200px) {
@@ -171,14 +131,30 @@ body {
     }
 }
 
+
+
 @media (max-width: 768px) {
+    .product-list {
+        grid-template-columns: 1fr;  /* 1 colonne sur mobile */
+        justify-items: center;        /* Centre les cartes */
+    }
+    
     .product-card {
-        min-width: auto;  /* Pas de largeur minimum sur mobile */
         width: 100%;
-        height: auto;  /* Hauteur automatique */
-        min-height: auto;
+        max-width: 508px;
+        height: auto;
+        min-height: 650px;
     }
 }
+
+/* @media (max-width: 768px) {
+    .product-card {
+        min-width: auto;  
+        width: 100%;
+        height: auto;  
+        min-height: auto;
+    }
+} */
 
 
 /* ===== POUR LE CONTENEUR PARENT (grille) ===== */
@@ -1018,16 +994,18 @@ body {
 
 /* ===== PAGINATION EN SEGMENTS CENTRÉS - VERSION OPTIMALE ===== */
 .product-card__slider .swiper-pagination {
-    display: flex !important;
+     display: flex;
     justify-content: center;
     align-items: center;
     gap: 6px;
-    width: 100% !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 15px;  /* Espace sur les bords */
+    box-sizing: border-box;
     position: absolute;
-    bottom: -10px !important;
-    left: 0 !important;
-    z-index: 25 !important;
-    pointer-events: auto !important;
+    bottom: -25px !important;
+    left: 0 !important;  /* Prend toute la largeur */
+    transform: none !important;  /* Annule le transform précédent */
 }
 
 .product-card__slider .swiper-pagination-bullet {
@@ -1046,54 +1024,23 @@ body {
 }
 
 
-/* Wrapper global */
+/* ===== FRAME 411 - CONTENEUR PRINCIPAL ===== */
 .product-list {
-   /* Position comme dans Figma */
+    /* Position comme dans Figma */
     position: absolute;
-    width: var(--frame-width);
-    height: var(--frame-height);
-    left: var(--frame-left);
-    top: var(--frame-top);
+    width: 1036px;
+    height: 2154px;
+    left: 202px;
+    top: 100px;
     
-    /* Grille pour 2 éléments par ligne */
+    /* Grille pour afficher 2 éléments par ligne */
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--card-gap);
-    margin-top: 100 px;
-    margin-bottom: 100 px;
-    margin-left: 202 px;
-    margin-right: 202 px;
-    /* Pour aligner parfaitement les cartes */
-    align-content: start;
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);  /* 2 colonnes de largeur égale */
+    gap: 20px;                              /* Espace entre les cartes */
     
+    /* Optionnel: ajouter un peu de padding si besoin */
     box-sizing: border-box;
-
-   
 }
-
-/* Forcer l'affichage des sliders */
-.swiper-slide {
-    display: block !important;
-    visibility: visible !important;
-}
-
-.swiper-slide img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-card__slider {
-    overflow: hidden !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-
 
 
 
