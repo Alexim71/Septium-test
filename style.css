@@ -1,0 +1,1123 @@
+/* ============================================ */
+/* STYLE.CSS - Version avec matériaux           */
+/* ============================================ */
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Variables */
+:root {
+    --color-primary: #2c3e50;
+    --color-secondary: #d35400;      /* Orange pour bouton Заказать */
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-background: #ffffff;
+    --color-border: #e0e0e0;
+    --color-material-bg: #f5f5f5;
+    --color-material-active: #32312F;
+    --color-like: #e74c3c;
+    
+    --font-family: 'Roboto', Arial, sans-serif;
+    --font-size-base: 14px;
+    --font-size-title: 16px;
+    --font-size-material: 13px;
+    
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    
+    --border-radius: 6px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    /* Dimensions exactes de la maquette */
+    --frame-width: 1036px;
+    --frame-height: 2154px;
+    --frame-left: 202px;
+    --frame-top: 100px;
+    
+    /* Dimensions des cartes */
+    --card-width: 508px;
+    --card-height: 704.67px;
+    --card-gap: 20px;
+
+     /* Dimensions */
+    --container-width: 1036px;
+    --container-height: 2154px;
+    --card-gap: 20px;
+    --top-margin: 100px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: #f9f9f9;
+    padding: var(--spacing-xl);
+}
+
+/* Grille */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Carte */
+.product-card {
+     /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* padding: 0px; */
+    isolation: isolate;  /* Pour gérer les z-index correctement */
+    
+    /* Dimensions */
+    width: 508px;
+    min-width: 390px;     /* Largeur minimum */
+    height: 704.67px;     /* Hauteur exacte */
+    
+    /* Style de base */
+    background-color: var(--color-background, #ffffff);
+    border-radius: 8px;    /* Border-radius fixe comme dans Figma */
+    position: relative;
+    
+    /* Ombre de base (sans hover) */
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+    
+    /* Transition pour l'ombre au hover */
+    transition: box-shadow 0.3s ease;
+    
+    /* Inside auto layout (pour le contexte parent) */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    
+    /* Pour gérer le contenu qui dépasse */
+    overflow: hidden;
+
+     /* Pour que les cartes soient bien alignées */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/* ===== POUR CENTRER LE CONTENEUR SI L'ÉCRAN EST TROP PETIT ===== */
+@media (max-width: 1300px) {
+    .product-list {
+        position: relative;
+        width: 100%;
+        height: auto;
+        left: 0;
+        top: 0;
+        padding: 20px;
+        margin: 0 auto;
+        max-width: calc((var(--card-width) * 2) + var(--card-gap) + 40px);
+    }
+}
+
+
+
+
+@media (max-width: 768px) {
+    .product-list {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+    
+    .product-card {
+        width: 100%;
+        max-width: var(--card-width);
+        height: auto;
+        min-height: 600px;
+    }
+}
+
+
+/* ===== VERSION RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .product-card {
+        width: 100%;  /* S'adapte au conteneur parent */
+        max-width: 508px;  /* Mais ne dépasse pas 508px */
+        height: auto;  /* Hauteur automatique sur écrans plus petits */
+        min-height: 600px;  /* Hauteur minimum */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card {
+        min-width: auto;  /* Pas de largeur minimum sur mobile */
+        width: 100%;
+        height: auto;  /* Hauteur automatique */
+        min-height: auto;
+    }
+}
+
+
+/* ===== POUR LE CONTENEUR PARENT (grille) ===== */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(390px, 508px));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+
+.product-card:hover {
+   /* Ombre portée comme dans Figma */
+    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.15));
+    
+    /* Alternative si filter ne fonctionne pas bien avec les enfants */
+    /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15); */
+    
+    /* Légère élévation */
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Slider */
+.product-card__slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: visible;  /* Important pour que la pagination puisse sortir */
+    margin-bottom: 30px; /* Espace pour la pagination */
+}
+
+.product-card__slider .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.product-card__slider .swiper-button-prev,
+.product-card__slider .swiper-button-next {
+  right: 10px;
+    left: auto;
+}
+
+/* Cacher les icônes par défaut de Swiper */
+.product-card__slider .swiper-button-prev::after,
+.product-card__slider .swiper-button-next::after {
+    display: none;
+}
+
+/* Version plus petite pour mobile si nécessaire */
+@media (max-width: 768px) {
+    .product-card__slider .swiper-button-prev svg,
+    .product-card__slider .swiper-button-next svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Style des SVG */
+.product-card__slider .swiper-button-prev svg,
+.product-card__slider .swiper-button-next svg {
+    display: block;
+    width: 43px;
+    height: 43px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.2s;
+}
+
+/* Effet au survol */
+.product-card__slider .swiper-button-prev:hover svg,
+.product-card__slider .swiper-button-next:hover svg {
+    transform: scale(1.1);
+}
+
+
+/* Positionnement (Swiper le fait déjà, mais ajustement si besoin) */
+.product-card__slider .swiper-button-prev {
+    left: 10px;
+    right: auto;
+}
+
+/* ===== TITRE POSITIONNÉ SUR L'IMAGE ===== */
+.product-card__title1 {
+     /* Position */
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 20;
+    
+    /* Styles Figma */
+    width: 115px;
+    height: 21px;
+    font-family: 'SF UI Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;  /* 21px comme dans Figma */
+    color: #FFFFFF;
+    
+    /* Pour le layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    /* Gestion du texte long (au cas où) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* Ombre pour lisibilité sur image */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Titre */
+.product-card__title {
+    /* Position sur l'image */
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 20;
+    
+    /* Styles Figma */
+    width: 215px;
+    height: 21px;
+    font-family: 'SF UI Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #FFFFFF;
+    
+    /* Caché par défaut */
+    display: none;
+    
+    /* Protection pour texte long (quand visible) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* Lisibilité sur image */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 0;
+}
+
+/* Apparaît au survol sur desktop UNIQUEMENT */
+@media (min-width: 769px) {
+    .product-card:hover .product-card__title {
+        display: block;
+        animation: fadeIn 0.2s ease;
+    }
+}
+
+
+/* Sur mobile, reste caché */
+@media (max-width: 768px) {
+    .product-card__title {
+        display: none !important;  /* Force caché sur mobile */
+    }
+}
+
+/* Description */
+.product-card__description {
+   font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: var(--spacing-md) var(--spacing-md) var(--spacing-xs);
+    line-height: 1.3;
+    
+    /* Gestion du texte long : max 2 lignes avec ... */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;           /* Limite à 2 lignes */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    
+}
+
+
+
+
+
+/* .product-card__description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    margin: 0 var(--spacing-md) var(--spacing-sm);
+    line-height: 1.4;
+    display: none; 
+} */
+
+/* SKU */
+.product-card__sku {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-xs) var(--spacing-md);
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.product-card__sku-label {
+    color: #999;
+}
+
+.product-card__sku-value {
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+/* =========================
+   MATÉRIAUX (Frame 139)
+========================= */
+
+.product-card__materials {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    width: 315px;
+    height: 62px;
+
+    margin: 0 var(--spacing-md);
+}
+
+/* =========================
+   TITRE (Frame 410)
+========================= */
+
+.product-card__materials-title {
+    font-family: 'SF UI Display', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #656565;
+
+    margin: 0;
+}
+
+/* =========================
+   LISTE DES TAGS (Frame 140)
+========================= */
+
+.product-card__materials-list {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+/* =========================
+   TAG BUTTON
+========================= */
+
+.product-card__material {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* On cache le radio */
+.product-card__material-input {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Style bouton */
+.product-card__material-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 6px 12px;
+    height: 33px;
+
+    background: #F6F6F6;
+    border-radius: 18px;
+
+    font-family: 'SF UI Display', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+
+    color: #32312F;
+
+    transition: all 0.2s ease;
+}
+
+/* =========================
+   ÉTAT SÉLECTIONNÉ
+========================= */
+
+.product-card__material-input:checked + .product-card__material-text {
+    background: #32312F;
+    color: #FFFFFF;
+}
+
+/* Cercle blanc (Frame 145) */
+.product-card__material-input:checked + .product-card__material-text::before {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    background: #F6F6F6;
+    border-radius: 50%;
+
+    font-size: 12px;
+    color: #32312F;
+}
+
+.product-card__price-main,
+.product-card__price-meter {
+    display: flex;
+    align-items: center;
+    gap: 4px;   
+    flex-wrap: wrap;
+}
+
+.product-card__price-label {
+    font-size: 13px;
+    color: #999;
+}
+
+.product-card__price-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-material-active);
+}
+
+.product-card__price-value2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-material-active);
+}
+
+/* Actions (boutons en bas) */
+.product-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    gap: var(--spacing-sm);
+}
+
+
+
+/* ===== ÉTATS HOVER (DESKTOP) ===== */
+
+/* @media (min-width: 769px) {
+    .product-card:hover .product-card__description {
+        display: block;
+    }
+} */
+
+
+/* ===== PETITS ÉCRANS ===== */
+@media (max-width: 480px) {
+    .product-card__actions {
+        flex-wrap: wrap;
+    }
+    
+   
+}
+
+
+
+
+/* Supprimer ou modifier l'ancien .product-card__calc */
+.product-card__calc {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+.product-card__like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-like);
+}
+
+.product-card__like svg {
+    width: 18px;
+    height: 18px;
+}
+
+.product-card__counter-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+    min-width: 20px;
+    text-align: center;
+}
+
+
+
+/******************************************************************************
+
+/* ========================= */
+/* FRAME 159 - CONTAINER */
+/* ========================= */
+
+.product-card__price-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;   /* Alignement en bas */
+    gap: 20px;
+
+    width: 468px;
+    height: 74px;
+
+    margin: var(--spacing-sm) var(--spacing-md);
+}
+
+
+/* ========================= */
+/* FRAME 146 - BLOC PRIX */
+/* ========================= */
+
+.product-card__price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3px;
+
+    width: 224px;
+    height: 74px;
+
+    margin: 0;
+}
+
+
+/* ========================= */
+/* FRAME 142 - LIGNE PRINCIPALE */
+/* ========================= */
+
+.product-card__price-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+
+    width: 224px;
+    height: 50px;
+}
+
+
+/* Bloc interne prix (Frame 140) */
+
+.product-card__price-main > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+
+/* ========================= */
+/* TEXTE "Цена от" */
+/* ========================= */
+
+.product-card__price-label {
+    font-family: 'SF UI Display', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #656565;
+}
+
+
+/* ========================= */
+/* VALEUR PRINCIPALE */
+/* ========================= */
+
+.product-card__price-value {
+    font-family: 'SF UI Display', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 120%;
+    color: #32312F;
+}
+
+
+/* ========================= */
+/* FRAME 143 - PRIX AU METRE */
+/* ========================= */
+
+.product-card__price-meter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+
+    width: 224px;
+    height: 21px;
+}
+
+
+/* Tiret */
+
+.product-card__price-dash {
+    font-family: 'SF UI Display', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #656565;
+}
+
+
+/* Valeur secondaire */
+
+.product-card__price-value2 {
+    font-family: 'SF UI Display', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 150%;
+    color: #32312F;
+}
+
+
+/* ========================= */
+/* BOUTON MAIN BUTTON */
+/* ========================= */
+
+.product-card__order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 30px;
+    gap: 10px;
+
+    width: 224px;
+    height: 56px;
+
+    background: #FF5C00;
+    border-radius: 14px;
+    border: none;
+
+    font-family: 'SF UI Display', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 150%;
+    color: #FFFFFF;
+
+    cursor: pointer;
+}
+
+
+/* Hover bouton */
+
+.product-card__order:hover {
+    background-color: #b84500;
+}
+
+
+/* ========================= */
+/* AFFICHAGE AU HOVER CARTE */
+/* ========================= */
+
+.product-card__order {
+    display: none;
+}
+
+.product-card:hover .product-card__order {
+    display: flex;
+}
+
+
+/* ========================= */
+/* VERSION MOBILE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .product-card__price-row {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .product-card__price-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;  /* IMPORTANT */
+    gap: 3px;
+    height: 50px;
+}
+
+    .product-card__price {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-card__price-main,
+    .product-card__price-meter {
+        width: 100%;
+    }
+
+    .product-card__order {
+        display: flex;
+        width: 100%;
+        height: 50px;
+        padding: 12px 20px;
+    }
+}
+
+/* Zoom (loupe) en haut à droite */
+.product-card__zoom {
+    /* ===== POSITION ===== */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 30;
+    
+    /* ===== DIMENSIONS ===== */
+    width: 32px;
+    height: 34px;
+    
+    /* ===== STYLE DU FOND ===== */
+    background:#F6F6F6;  /* Blanc semi-transparent */
+    backdrop-filter: blur(2.5px);           /* Effet de flou (verre dépoli) */
+    border-radius: 8px;                     /* Coins légèrement arrondis */
+    
+    /* ===== CENTRAGE DE L'ICÔNE ===== */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* ===== PADDING FIGMA ===== */
+    padding: 5px 4px;
+    
+    /* ===== POUR LE LAYOUT FLEX ===== */
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+    
+    /* ===== TRANSITION ===== */
+    transition: all 0.2s ease;
+}
+
+.product-card__zoom:hover {
+    background: rgba(255, 255, 255, 0.8);   /* Plus opaque au survol */
+    backdrop-filter: blur(4px);
+    transform: scale(1.05);   
+}
+
+.product-card__zoom svg path {
+    fill: #464646;
+}
+
+.product-card__zoom svg {
+     width: 18px;
+    height: 18px;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+/* ========================= */
+/* FRAME 157 - FOOTER */
+/* ========================= */
+
+.product-card__footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 14px;
+
+    width: 468px;
+    height: 48px;
+}
+
+
+/* ========================= */
+/* LINE 2 */
+/* ========================= */
+
+.product-card__divider {
+    width: 468px;
+    border-top: 1px solid #E6E6E6;
+}
+
+
+/* ========================= */
+/* FRAME 158 */
+/* ========================= */
+
+.product-card__footer-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+
+    width: 468px;
+    height: 34px;
+}
+
+
+/* ========================= */
+/* FRAME 147 - LIKE COUNTER */
+/* ========================= */
+
+.product-card__counter {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 5px;
+
+    width: 68px;
+    height: 34px;
+
+    background: #F6F6F6;
+    border-radius: 18px;
+}
+
+
+.product-card__like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    color: #A1A5AD;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.product-card__like svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+.product-card__counter-value {
+    font-family: 'SF UI Display', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 150%;
+    color: #32312F;
+}
+
+
+/* ========================= */
+/* FRAME 160 - LINK */
+/* ========================= */
+
+.product-card__calc {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    width: 165px;
+    height: 21px;
+
+    font-family: 'SF UI Display', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #656565;
+
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+
+.product-card__calc:hover {
+    color: #32312F;
+}
+
+
+/* Arrow */
+
+.product-card__arrow {
+    width: 12px;
+    height: 12px;
+
+    transform: rotate(0deg);
+
+    flex: none;
+    flex-grow: 0;
+
+    display: block;
+}
+
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .product-card__footer,
+    .product-card__footer-row,
+    .product-card__divider {
+        width: 100%;
+    }
+
+}
+
+
+/* ===== PAGINATION EN SEGMENTS CENTRÉS - VERSION OPTIMALE ===== */
+.product-card__slider .swiper-pagination {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 100% !important;
+    position: absolute;
+    bottom: -10px !important;
+    left: 0 !important;
+    z-index: 25 !important;
+    pointer-events: auto !important;
+}
+
+.product-card__slider .swiper-pagination-bullet {
+    flex: 1 1 auto;  /* Distribution automatique */
+    height: 2px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    border-radius: 2px;
+    margin: 0 !important;
+    transition: all 0.2s;
+}
+
+.product-card__slider .swiper-pagination-bullet-active {
+    background: var(--color-secondary, #d35400);
+    transform: scaleY(1.2);  /* Légèrement plus haut */
+}
+
+
+/* Wrapper global */
+.product-list {
+   /* Position comme dans Figma */
+    position: absolute;
+    width: var(--frame-width);
+    height: var(--frame-height);
+    left: var(--frame-left);
+    top: var(--frame-top);
+    
+    /* Grille pour 2 éléments par ligne */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--card-gap);
+    margin-top: 100 px;
+    margin-bottom: 100 px;
+    margin-left: 202 px;
+    margin-right: 202 px;
+    /* Pour aligner parfaitement les cartes */
+    align-content: start;
+    justify-content: center;
+    
+    box-sizing: border-box;
+
+   
+}
+
+/* Forcer l'affichage des sliders */
+.swiper-slide {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.swiper-slide img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-card__slider {
+    overflow: hidden !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
