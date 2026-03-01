@@ -85,7 +85,7 @@ $(document).ready(function() {
             </div>
 
             <!-- Zoom -->
-            <a href="https://via.placeholder.com/1200x900/FFE4C4/8B4513?text=Кухня+1+Large" 
+            <a href="images/produit1-1.jpg" 
                class="product-card__zoom" 
                data-fancybox="gallery-{id}"
                aria-label="Увеличить">
